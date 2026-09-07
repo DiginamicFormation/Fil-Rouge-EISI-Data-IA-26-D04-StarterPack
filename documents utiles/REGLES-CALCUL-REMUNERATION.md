@@ -39,12 +39,12 @@ Ce document sert donc trois usages :
 
 C'est la distinction la plus importante du document. Confondre les deux, c'est présenter en soutenance des chiffres inventés comme des exigences client.
 
-| | **Règle métier** | **Paramètre** |
-| --- | --- | --- |
-| Origine | Le Readme, le glossaire, le client | Une décision de conception |
-| Exemple | « les honoraires = un montant fixe + un pourcentage » | « le fixe vaut 3 000 € » |
-| Si on la change | Le métier n'est plus respecté | Le calcul reste juste, le résultat change |
-| Où ça vit | Dans le **code** et le **schéma** | Dans une **table de paramètres**, jamais en dur |
+|                 | **Règle métier**                                      | **Paramètre**                                   |
+|-----------------|-------------------------------------------------------|-------------------------------------------------|
+| Origine         | Le Readme, le glossaire, le client                    | Une décision de conception                      |
+| Exemple         | « les honoraires = un montant fixe + un pourcentage » | « le fixe vaut 3 000 € »                        |
+| Si on la change | Le métier n'est plus respecté                         | Le calcul reste juste, le résultat change       |
+| Où ça vit       | Dans le **code** et le **schéma**                     | Dans une **table de paramètres**, jamais en dur |
 
 **Ce que le Readme impose (non négociable) :**
 
@@ -89,11 +89,11 @@ L'ordre n'est pas indifférent : le score `S` est calculé **avant** le taux par
 
 Aucun montant n'est calculé tant que le droit n'est pas établi. Le Readme croise deux dimensions : l'exclusivité du mandat et l'origine de la vente.
 
-| Origine de la vente | Mandat **exclusif** | Mandat **non-exclusif** |
-| --- | --- | --- |
-| Le chasseur a présenté le bien | Rémunéré | Rémunéré |
-| Le client a trouvé seul | **Rémunéré** | **Non rémunéré** |
-| Un chasseur d'une autre agence | *cas impossible* | Non rémunéré |
+| Origine de la vente            | Mandat **exclusif** | Mandat **non-exclusif** |
+|--------------------------------|---------------------|-------------------------|
+| Le chasseur a présenté le bien | Rémunéré            | Rémunéré                |
+| Le client a trouvé seul        | **Rémunéré**        | **Non rémunéré**        |
+| Un chasseur d'une autre agence | *cas impossible*    | Non rémunéré            |
 
 À quoi s'ajoute la condition de validité : `date_fin = date_signature + 6 mois`. Un acte signé après cette date n'ouvre aucun droit, sauf renouvellement du mandat.
 
@@ -107,20 +107,20 @@ Aucun montant n'est calculé tant que le droit n'est pas établi. Le Readme croi
 
 $$H = F + t \times P$$
 
-| Symbole | Signification | Nature | Valeur retenue |
-| --- | --- | --- | --- |
-| `P` | Prix d'achat acté | donnée | — |
-| `F` | Part fixe des honoraires | *(paramètre)* | **3 000,00 €** |
-| `t` | Part proportionnelle | *(paramètre)* | **2,5 %** |
-| `H` | Honoraires encaissés par l'entreprise | résultat | — |
+| Symbole | Signification                         | Nature        | Valeur retenue |
+|---------|---------------------------------------|---------------|----------------|
+| `P`     | Prix d'achat acté                     | donnée        | —              |
+| `F`     | Part fixe des honoraires              | *(paramètre)* | **3 000,00 €** |
+| `t`     | Part proportionnelle                  | *(paramètre)* | **2,5 %**      |
+| `H`     | Honoraires encaissés par l'entreprise | résultat      | —              |
 
 | Prix d'achat `P` | Honoraires `H` | `H` en % du prix |
-| ---: | ---: | ---: |
-| 180 000 € | 7 500,00 € | 4,17 % |
-| 250 000 € | 9 250,00 € | 3,70 % |
-| 420 000 € | 13 500,00 € | 3,21 % |
-| 620 000 € | 18 500,00 € | 2,98 % |
-| 800 000 € | 23 000,00 € | 2,88 % |
+|-----------------:|---------------:|-----------------:|
+|        180 000 € |     7 500,00 € |           4,17 % |
+|        250 000 € |     9 250,00 € |           3,70 % |
+|        420 000 € |    13 500,00 € |           3,21 % |
+|        620 000 € |    18 500,00 € |           2,98 % |
+|        800 000 € |    23 000,00 € |           2,88 % |
 
 La part fixe rend les honoraires **dégressifs en pourcentage** : elle protège la rentabilité des petits dossiers, dont le coût de traitement est le même que celui des gros. C'est précisément la raison d'être d'un « fixe + pourcentage » plutôt que d'un pourcentage seul.
 
@@ -138,13 +138,13 @@ Les cinq critères sont **imposés** ; leur notation et leur pondération sont *
 
 Deux critères portent sur **la vente en cours** (transactionnels), trois sur **l'activité du chasseur** — comptés sur **douze mois glissants** précédant la date de l'acte *(paramètre : la fenêtre)*.
 
-| # | Critère (imposé) | Portée | Notation *(paramètre)* | Poids |
-| --- | --- | --- | --- | ---: |
-| S₁ | Délai signature du mandat → acte, **arrondi à la semaine inférieure** | vente | ≤ 12 sem. : 100 · 13-20 : 80 · 21-28 : 60 · 29-36 : 40 · 37-48 : 20 · > 48 : 0 | 25 % |
-| S₂ | Mandat exclusif ou non | vente | exclusif : 100 · non-exclusif : 60 | 10 % |
-| S₃ | Nombre de ventes réussies | 12 mois | `min(100 ; ventes × 20)` | 25 % |
-| S₄ | Nombre de mandats signés | 12 mois | `min(100 ; mandats × 10)` | 15 % |
-| S₅ | Nombre de visites avant achat | vente | ≤ 3 : 100 · 4-6 : 80 · 7-9 : 60 · 10-12 : 40 · 13-15 : 20 · > 15 : 0 | 25 % |
+| #  | Critère (imposé)                                                      | Portée  | Notation *(paramètre)*                                                         | Poids |
+|----|-----------------------------------------------------------------------|---------|--------------------------------------------------------------------------------|------:|
+| S₁ | Délai signature du mandat → acte, **arrondi à la semaine inférieure** | vente   | ≤ 12 sem. : 100 · 13-20 : 80 · 21-28 : 60 · 29-36 : 40 · 37-48 : 20 · > 48 : 0 |  25 % |
+| S₂ | Mandat exclusif ou non                                                | vente   | exclusif : 100 · non-exclusif : 60                                             |  10 % |
+| S₃ | Nombre de ventes réussies                                             | 12 mois | `min(100 ; ventes × 20)`                                                       |  25 % |
+| S₄ | Nombre de mandats signés                                              | 12 mois | `min(100 ; mandats × 10)`                                                      |  15 % |
+| S₅ | Nombre de visites avant achat                                         | vente   | ≤ 3 : 100 · 4-6 : 80 · 7-9 : 60 · 10-12 : 40 · 13-15 : 20 · > 15 : 0           |  25 % |
 
 $$\text{semaines} = \left\lfloor \frac{\text{date acte} - \text{date signature mandat}}{7} \right\rfloor$$
 
@@ -168,13 +168,13 @@ Le barème est une grille **par tranches de montant**, **datée**, et **rattach�
 
 > 🔑 **Le taux s'applique aux honoraires `H`, jamais au prix `P`.** Le Readme définit le barème comme « sa part de ce que paye le client à l'entreprise ». Se tromper d'assiette multiplie le résultat par trente.
 
-| Tranche sur `P` | `r₀` *(paramètre)* |
-| --- | ---: |
-| < 200 000 € | 30 % |
-| 200 000 – 349 999 € | 35 % |
-| 350 000 – 499 999 € | 40 % |
-| 500 000 – 749 999 € | 45 % |
-| ≥ 750 000 € | 50 % |
+| Tranche sur `P`     | `r₀` *(paramètre)* |
+|---------------------|-------------------:|
+| < 200 000 €         |               30 % |
+| 200 000 – 349 999 € |               35 % |
+| 350 000 – 499 999 € |               40 % |
+| 500 000 – 749 999 € |               45 % |
+| ≥ 750 000 €         |               50 % |
 
 **Barème par palier, pas par tranches marginales.** Le scénario `@bareme` dit : « la part reversée correspond à **la** tranche du barème applicable à ce montant ». Un seul taux s'applique donc à la totalité des honoraires, sans découpage à la manière de l'impôt sur le revenu. C'est plus simple à expliquer à un chasseur — et c'est la lecture littérale de la règle.
 
@@ -202,11 +202,11 @@ $$p = \frac{S - 50}{50} \times 20\% \qquad \textit{(paramètre)}$$
 
 $$r = \text{borne}\big(r_0 \times (1 + a + p)\;;\; 20\%\;;\; 60\%\big)$$
 
-| Composante | Amplitude | Rôle |
-| --- | --- | --- |
-| `a` ancienneté | 0 % → +10 % (plafond à 5 ans) | Fidélise, reconnaît l'expérience acquise |
+| Composante      | Amplitude                     | Rôle                                                           |
+|-----------------|-------------------------------|----------------------------------------------------------------|
+| `a` ancienneté  | 0 % → +10 % (plafond à 5 ans) | Fidélise, reconnaît l'expérience acquise                       |
 | `p` performance | −20 % → +20 %, pivot à S = 50 | Récompense le travail de **cette** vente et l'activité récente |
-| bornes | 20 % ≤ `r` ≤ 60 % | Garantit une marge à l'entreprise et un plancher au chasseur |
+| bornes          | 20 % ≤ `r` ≤ 60 %             | Garantit une marge à l'entreprise et un plancher au chasseur   |
 
 Ce sont des variations **relatives** : `+6 %` appliqué à un taux de base de 40 % donne 42,4 %, pas 46 %. Les deux effets s'additionnent avant d'être appliqués, ce qui évite qu'un chasseur ancien **et** performant voie ses bonus se composer de façon explosive.
 
@@ -222,11 +222,11 @@ $$R = \text{arrondi}_{2}\big(r \times H\big)$$
 
 La chaîne d'arrondi doit être fixée explicitement, sinon deux implémentations donneront deux résultats à quelques centimes près — et un chasseur qui recompte trouvera l'écart.
 
-| Grandeur | Précision | Mode |
-| --- | --- | --- |
-| Score `S` | 1 décimale | demi supérieur |
-| Taux final `r` | 4 décimales (soit 0,01 point de %) | demi supérieur |
-| Rémunération `R` | 2 décimales (centime) | demi supérieur |
+| Grandeur         | Précision                          | Mode           |
+|------------------|------------------------------------|----------------|
+| Score `S`        | 1 décimale                         | demi supérieur |
+| Taux final `r`   | 4 décimales (soit 0,01 point de %) | demi supérieur |
+| Rémunération `R` | 2 décimales (centime)              | demi supérieur |
 
 **Aucun arrondi intermédiaire** en dehors de ces trois : on calcule en pleine précision et on arrondit au moment de stocker. La marge de l'entreprise se déduit par différence — `H − R` — et n'est jamais arrondie séparément, sous peine de voir apparaître un centime fantôme.
 
@@ -236,22 +236,22 @@ La chaîne d'arrondi doit être fixée explicitement, sinon deux implémentation
 
 **Situation.** Bruno, 3 ans d'ancienneté, 4 ventes et 9 mandats sur douze mois. Mandat **exclusif** signé le 14/11/2025, acte authentique le 30/07/2026, **5 visites** avant achat, bien acquis **420 000 €**.
 
-| Étape | Détail du calcul | Résultat |
-| --- | --- | ---: |
-| **0. Droit** | mandat exclusif, valide, vente issue du dispositif | ouvert |
-| **1. Honoraires** | `3 000 + 2,5 % × 420 000` | **13 500,00 €** |
-| S₁ délai | `⌊258 j / 7⌋` = 36 sem. → tranche 29-36 | 40 |
-| S₂ exclusivité | exclusif | 100 |
-| S₃ ventes | `min(100 ; 4 × 20)` | 80 |
-| S₄ mandats | `min(100 ; 9 × 10)` | 90 |
-| S₅ visites | 5 → tranche 4-6 | 80 |
-| **2. Performance** | `0,25×40 + 0,10×100 + 0,25×80 + 0,15×90 + 0,25×80` | **73,5 / 100** |
-| **3. Tranche** | 420 000 ∈ [350 000 ; 500 000[ | 40 % |
-| 4a. Ancienneté | `min(2 % × 3 ; 10 %)` | +6 % |
-| 4b. Performance | `(73,5 − 50) / 50 × 20 %` | +9,4 % |
-| **4. Taux final** | `40 % × (1 + 0,06 + 0,094)` = 40 % × 1,154 | **46,16 %** |
-| **5. Rémunération** | `46,16 % × 13 500` | **6 231,60 €** |
-| Marge entreprise | `13 500 − 6 231,60` | 7 268,40 € |
+| Étape               | Détail du calcul                                   |        Résultat |
+|---------------------|----------------------------------------------------|----------------:|
+| **0. Droit**        | mandat exclusif, valide, vente issue du dispositif |          ouvert |
+| **1. Honoraires**   | `3 000 + 2,5 % × 420 000`                          | **13 500,00 €** |
+| S₁ délai            | `⌊258 j / 7⌋` = 36 sem. → tranche 29-36            |              40 |
+| S₂ exclusivité      | exclusif                                           |             100 |
+| S₃ ventes           | `min(100 ; 4 × 20)`                                |              80 |
+| S₄ mandats          | `min(100 ; 9 × 10)`                                |              90 |
+| S₅ visites          | 5 → tranche 4-6                                    |              80 |
+| **2. Performance**  | `0,25×40 + 0,10×100 + 0,25×80 + 0,15×90 + 0,25×80` |  **73,5 / 100** |
+| **3. Tranche**      | 420 000 ∈ [350 000 ; 500 000[                      |            40 % |
+| 4a. Ancienneté      | `min(2 % × 3 ; 10 %)`                              |            +6 % |
+| 4b. Performance     | `(73,5 − 50) / 50 × 20 %`                          |          +9,4 % |
+| **4. Taux final**   | `40 % × (1 + 0,06 + 0,094)` = 40 % × 1,154         |     **46,16 %** |
+| **5. Rémunération** | `46,16 % × 13 500`                                 |  **6 231,60 €** |
+| Marge entreprise    | `13 500 − 6 231,60`                                |      7 268,40 € |
 
 **Lecture de contrôle.** La rémunération de Bruno représente **1,48 % du prix du bien** (6 231,60 / 420 000). C'est l'ordre de grandeur attendu pour un chasseur, et c'est le chiffre à comparer aux 2,50–3,25 % de la colonne `taux_commission` de la base existante — voir ci-dessous.
 
@@ -301,14 +301,14 @@ C'est le point le plus important du document. Le barème varie dans le temps : s
 
 À verser au registre d'anomalies de la Phase 1.
 
-| # | Constat | Gravité |
-| --- | --- | --- |
-| A1 | `utilisateurs.taux_commission` est un scalaire unique par chasseur : ni tranche, ni date. Deux des trois dimensions imposées par le métier sont absentes. | Bloquant |
+| #  | Constat                                                                                                                                                                                                                                                                                                                                                     | Gravité  |
+|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| A1 | `utilisateurs.taux_commission` est un scalaire unique par chasseur : ni tranche, ni date. Deux des trois dimensions imposées par le métier sont absentes.                                                                                                                                                                                                   | Bloquant |
 | A2 | **L'unité du taux est indéterminée.** Sur l'exemple à 420 000 €, un `taux_commission` de 3,25 % appliqué au prix donnerait **13 650 €**, soit *davantage que la totalité des honoraires encaissés* (13 500 €). L'entreprise paierait le chasseur plus qu'elle n'encaisse. La colonne n'est donc ni un % du prix, ni cohérente avec le modèle métier décrit. | Bloquant |
-| A3 | Aucune trace des honoraires : ni `montant_fixe`, ni `taux_pourcentage`, ni table de paiements. L'assiette du calcul n'est stockée nulle part. | Bloquant |
-| A4 | `mandats` n'a pas de `date_fin`. La règle des 6 mois est implicite, donc non vérifiable par la base. | Majeur |
-| A5 | Pas de table `visites` ni `ventes` : trois des cinq critères de performance sont incalculables, et le délai mandat → acte n'a pas de borne finale. | Bloquant |
-| A6 | `taux_commission` est `NULL` pour tous les clients — conséquence du mélange clients/chasseurs dans une table unique. Le champ n'a de sens que pour la moitié des lignes. | Majeur |
+| A3 | Aucune trace des honoraires : ni `montant_fixe`, ni `taux_pourcentage`, ni table de paiements. L'assiette du calcul n'est stockée nulle part.                                                                                                                                                                                                               | Bloquant |
+| A4 | `mandats` n'a pas de `date_fin`. La règle des 6 mois est implicite, donc non vérifiable par la base.                                                                                                                                                                                                                                                        | Majeur   |
+| A5 | Pas de table `visites` ni `ventes` : trois des cinq critères de performance sont incalculables, et le délai mandat → acte n'a pas de borne finale.                                                                                                                                                                                                          | Bloquant |
+| A6 | `taux_commission` est `NULL` pour tous les clients — conséquence du mélange clients/chasseurs dans une table unique. Le champ n'a de sens que pour la moitié des lignes.                                                                                                                                                                                    | Majeur   |
 
 ---
 
@@ -316,17 +316,17 @@ C'est le point le plus important du document. Le barème varie dans le temps : s
 
 À porter au [`JOURNAL-DE-DECISIONS.md`](./JOURNAL-DE-DECISIONS.md) une fois arbitrées, et à documenter dans la [`MATRICE-DECISION.md`](./MATRICE-DECISION.md) si plusieurs options se valent.
 
-| # | Question | Proposition de ce document |
-| --- | --- | --- |
-| D1 | Quelles valeurs pour `F` et `t` ? | 3 000 € + 2,5 % |
-| D2 | Mandat non-exclusif, client trouvant seul : rien, ou indemnité forfaitaire ? | Rien (R = 0), mais motif tracé |
-| D3 | Barème par palier ou progressif par tranches ? | Par palier, conforme à la lettre du scénario `@bareme` |
-| D4 | Quelle fenêtre pour les critères de volume ? | 12 mois glissants |
-| D5 | Conserver S₃ et S₄ séparés, ou introduire le taux de transformation ? | Séparés, fidèles au Readme |
-| D6 | Quels poids pour les cinq critères ? | 25 / 10 / 25 / 15 / 25 |
-| D7 | Quelle amplitude pour l'ancienneté et la performance ? | +10 % max et ±20 % |
-| D8 | Le plancher de 20 % doit-il rester alors qu'il ne mord jamais ? | Oui, garde-fou pour les révisions futures |
-| D9 | Qui peut créer un barème nominatif, et avec quelle validation ? | À définir dans le [`RACI.md`](./RACI.md) |
+| #  | Question                                                                     | Proposition de ce document                             |
+|----|------------------------------------------------------------------------------|--------------------------------------------------------|
+| D1 | Quelles valeurs pour `F` et `t` ?                                            | 3 000 € + 2,5 %                                        |
+| D2 | Mandat non-exclusif, client trouvant seul : rien, ou indemnité forfaitaire ? | Rien (R = 0), mais motif tracé                         |
+| D3 | Barème par palier ou progressif par tranches ?                               | Par palier, conforme à la lettre du scénario `@bareme` |
+| D4 | Quelle fenêtre pour les critères de volume ?                                 | 12 mois glissants                                      |
+| D5 | Conserver S₃ et S₄ séparés, ou introduire le taux de transformation ?        | Séparés, fidèles au Readme                             |
+| D6 | Quels poids pour les cinq critères ?                                         | 25 / 10 / 25 / 15 / 25                                 |
+| D7 | Quelle amplitude pour l'ancienneté et la performance ?                       | +10 % max et ±20 %                                     |
+| D8 | Le plancher de 20 % doit-il rester alors qu'il ne mord jamais ?              | Oui, garde-fou pour les révisions futures              |
+| D9 | Qui peut créer un barème nominatif, et avec quelle validation ?              | À définir dans le [`RACI.md`](./RACI.md)               |
 
 ---
 
@@ -755,13 +755,13 @@ def test_calcul_de_bout_en_bout():
 
 ### 14.6 Ce que ce module ne fait pas — volontairement
 
-| Hors périmètre | Pourquoi, et où cela se traite |
-| --- | --- |
-| Lire et écrire en base | Le calcul reste une fonction pure. La persistance est une couche au-dessus : elle charge le `Parametrage`, appelle la fonction, insère le `Remuneration` dans `paiements`. |
+| Hors périmètre                               | Pourquoi, et où cela se traite                                                                                                                                                                          |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Lire et écrire en base                       | Le calcul reste une fonction pure. La persistance est une couche au-dessus : elle charge le `Parametrage`, appelle la fonction, insère le `Remuneration` dans `paiements`.                              |
 | Compter les ventes et mandats sur douze mois | Ce sont deux agrégats SQL sur `ventes` et `mandats`, à écrire une fois les tables créées. Le module les reçoit déjà calculés, ce qui garde la fenêtre glissante (D4) modifiable sans toucher au calcul. |
-| Calculer l'ancienneté | Dépend de la date d'entrée du chasseur, donnée RH. Le module reçoit un nombre d'années révolues. |
-| Contrôler les droits d'accès | Exigence **ENF-03** : le montant et l'IBAN ne sont lisibles que par le chasseur concerné et son manager. Cela relève de la couche applicative, pas du calcul. |
-| Décider si le calcul doit être rejoué | Non : le §11-3 l'interdit. Le résultat est figé à l'acte. Le module se contente de ne rien savoir de l'historique. |
+| Calculer l'ancienneté                        | Dépend de la date d'entrée du chasseur, donnée RH. Le module reçoit un nombre d'années révolues.                                                                                                        |
+| Contrôler les droits d'accès                 | Exigence **ENF-03** : le montant et l'IBAN ne sont lisibles que par le chasseur concerné et son manager. Cela relève de la couche applicative, pas du calcul.                                           |
+| Décider si le calcul doit être rejoué        | Non : le §11-3 l'interdit. Le résultat est figé à l'acte. Le module se contente de ne rien savoir de l'historique.                                                                                      |
 
 > 💡 **Une conséquence utile pour la Phase 1.** Le type `Vente` est la liste minimale des données d'entrée du calcul. Confronté au schéma existant — trois tables, ni `ventes`, ni `visites`, ni `date_fin` de mandat — il montre qu'**aucune instance de `Vente` n'est constructible aujourd'hui**. L'argument de l'audit cesse d'être une opinion : il devient une dépendance non satisfaite, visible à la compilation.
 
