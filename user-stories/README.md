@@ -22,10 +22,12 @@ Ce dossier contient des **user stories au format Gherkin**, déduites du [`Readm
 | [`07_chasseur_remuneration_et_performance.feature`](./07_chasseur_remuneration_et_performance.feature) | Facturation du chasseur, paiement, recalcul de performance, renouvellement de mandat | Parcours chasseur, étapes 10-13 |
 | [`08_futur_particulier_assistance_ia.feature`](./08_futur_particulier_assistance_ia.feature) | Ajouts IA côté particulier (faisabilité, personnalisation, recommandations) | « Le futur du parcours utilisateur » — particulier |
 | [`09_futur_chasseur_assistance_ia.feature`](./09_futur_chasseur_assistance_ia.feature) | Ajouts IA côté chasseur (faisabilité, dédoublonnage, pré-rédaction, vérification autonome) | « Le futur du parcours utilisateur » — chasseur |
+| [`10_calcul_remuneration_chasseur.feature`](./10_calcul_remuneration_chasseur.feature) | **Algorithme de rémunération** chiffré : droit à rémunération, honoraires, score de performance, barème par tranches, modulations, arrondis, gel des valeurs | « Le contexte » + [`REGLES-CALCUL-REMUNERATION.md`](../documents%20utiles/REGLES-CALCUL-REMUNERATION.md) |
 
 ## Conventions
 
-* Gherkin en français (`# language: fr`), avec les mots-clés `Fonctionnalité`, `Contexte`, `Scénario`, `Plan du Scénario`, `Exemples`, `Étant donné`, `Quand`, `Alors`, `Et`, `Mais`.
+* Gherkin en français (`# language: fr`), avec les mots-clés `Fonctionnalité`, `Règle`, `Contexte`, `Scénario`, `Plan du Scénario`, `Exemples`, `Étant donné`, `Quand`, `Alors`, `Et`, `Mais`.
+* Le mot-clé `Règle:` regroupe les scénarios sous la règle métier qu'ils illustrent (voir [`Gherkin.md`](../documents%20utiles/Gherkin.md) § 5.2). Il est utilisé dans le fichier `10`, dont la lecture des seules `Règle:` donne le résumé exécutif de l'algorithme.
 * Tags `@actuel` / `@futur-ia` pour distinguer le parcours existant du parcours cible avec IA, et `@particulier` / `@chasseur` pour l'acteur concerné.
 * Date de référence utilisée dans les exemples : **25 juillet 2026**, conformément à la date de référence indiquée dans le Readme principal.
 * Chaque scénario reste au niveau **métier** (pas d'implémentation technique) : à affiner/compléter lors de la conception du modèle de données et de l'API.

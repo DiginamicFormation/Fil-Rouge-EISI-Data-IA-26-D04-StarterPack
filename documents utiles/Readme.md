@@ -33,8 +33,9 @@ Trois types de documents cohabitent :
 | [`FICHE-COURS-OLTP-OLAP.md`](./FICHE-COURS-OLTP-OLAP.md) | Fiche de cours | **Comprendre** OLTP & OLAP : sigles, nature, quand/pourquoi, à qui présenter, méthode | À lire en premier · **BC05** |
 | [`OLTP.md`](./OLTP.md) | Fiche + modèle | Modéliser la base **transactionnelle** (le métier au quotidien, normalisée) | Phase 2 · **BC05** |
 | [`OLAP.md`](./OLAP.md) | Fiche + modèle | Modéliser la base **analytique** (entrepôt de pilotage, en étoile) et son alimentation | Phase 3 · **BC05** |
+| [`REGLES-CALCUL-REMUNERATION.md`](./REGLES-CALCUL-REMUNERATION.md) | Fiche + modèle | Transformer la règle de rémunération du chasseur en **algorithme explicite** (honoraires, barème par tranches, performance) et en contraintes de modélisation — spécifié dans [`10_calcul_remuneration_chasseur.feature`](../user-stories/10_calcul_remuneration_chasseur.feature) | Phase 1-2 · **BC02/BC05** |
 
-> ▶️ **Ordre de lecture conseillé (données)** : `MCD-MERISE.md` pour modéliser, puis `FICHE-COURS-OLTP-OLAP.md` (le pourquoi) → `OLTP.md` → `OLAP.md`.
+> ▶️ **Ordre de lecture conseillé (données)** : `MCD-MERISE.md` pour modéliser, puis `FICHE-COURS-OLTP-OLAP.md` (le pourquoi) → `OLTP.md` → `OLAP.md`. La fiche `REGLES-CALCUL-REMUNERATION.md` se lit **avant** de modéliser : elle fournit les entités `baremes_commission` et `paiements`.
 
 ## 🛡️ Notes transverses obligatoires
 
